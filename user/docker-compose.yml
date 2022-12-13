@@ -1,0 +1,12 @@
+version: '3.9'
+services:
+  users_backend:
+    build: .
+    container_name: user-ms
+    volumes:
+      - .:/app
+    networks:
+      - user-network
+networks:
+  users:
+    name: user-network

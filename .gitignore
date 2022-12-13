@@ -1,0 +1,3 @@
+# created by virtualenv automatically
+user/core/migrations/*
+.idea/*
