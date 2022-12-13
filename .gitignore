@@ -1,4 +1,8 @@
 # created by virtualenv automatically
 user/core/migrations/*
 .idea/*
-user/user/__pycache__/*
+.user/user/__pycache__/*
+.user/user/__pycache__
+.user/core/__pycache__/*
+.user/core/__pycache__
+.user/debug.log
