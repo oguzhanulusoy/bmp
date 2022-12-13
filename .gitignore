@@ -1,3 +1,4 @@
 # created by virtualenv automatically
 user/core/migrations/*
 .idea/*
+user/user/__pycache__/*
