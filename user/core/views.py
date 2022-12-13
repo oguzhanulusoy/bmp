@@ -1,16 +1,16 @@
-import datetime
-import json
-
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.contrib.auth import login, authenticate
 from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
+from django.utils import timezone
 
 from http import HTTPStatus
+from datetime import timedelta
 
 from .models import User, UserToken
 
+import json
 import logging
 import random
 
@@ -92,25 +92,23 @@ def get_user_by_pk(request, pk):
 
 
 @csrf_exempt
-def log(request):
+def auth(request):
     context = {}
     status = 0
     if request.method == 'POST':
         data = json.loads(request.body)
         username = data["username"]
         if username is not None:
-            user = get_object_or_404(User, username=username)
             try:
                 username = data["username"]
                 password = data["password"]
-                print("burda")
                 user = authenticate(username=username, password=password)
-                print(user)
                 if user is not None:
                     login(request, user)
-                    user_token = User.objects.create(user=user, token=get_token(), date_expired=datetime.datetime.now().day(1))
-                    print(user_token)
-                    # context = {response: [user.serialize() for user in users]}
+                    user = User.objects.get(username=username)
+                    past_week = timezone.now().date() + timedelta(days=1)
+                    user_token = UserToken.objects.create(user=user, token=get_token(), date_expired=past_week)
+                    context = {response: user_token.serialize()}
                     status = HTTPStatus.ACCEPTED
                 else:
                     context[response] = no_context
