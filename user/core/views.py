@@ -99,6 +99,7 @@ def auth(request):
         data = json.loads(request.body)
         username = data["username"]
         if username is not None:
+            # TODO: Check whether user is already authenticated, or not
             try:
                 username = data["username"]
                 password = data["password"]
@@ -106,8 +107,8 @@ def auth(request):
                 if user is not None:
                     login(request, user)
                     user = User.objects.get(username=username)
-                    past_week = timezone.now().date() + timedelta(days=1)
-                    user_token = UserToken.objects.create(user=user, token=get_token(), date_expired=past_week)
+                    expiration_time = timezone.now().date() + timedelta(days=1)
+                    user_token = UserToken.objects.create(user=user, token=get_token(), date_expired=expiration_time)
                     context = {response: user_token.serialize()}
                     status = HTTPStatus.ACCEPTED
                 else:
