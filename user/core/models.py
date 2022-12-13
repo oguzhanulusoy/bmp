@@ -3,8 +3,10 @@ from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.core.validators import RegexValidator
 from django.db import models
+from datetime import timedelta
 
 from .managers import UserManager
+
 
 class User(AbstractBaseUser, PermissionsMixin):
     proxy = True
@@ -52,3 +54,29 @@ class User(AbstractBaseUser, PermissionsMixin):
             "phone_number": self.phone_number,
             "date_joined": self.date_joined
         }
+
+
+class UserToken(models.Model):
+    proxy = True
+    user = models.ForeignKey('User', on_delete=models.CASCADE)
+    token = models.CharField(_('token'), max_length=50, unique=True)
+    date_created = models.DateTimeField(_('date_created'), auto_now_add=True)
+    date_expired = models.DateTimeField(_('date_expired'))
+
+    @property
+    def full_info(self):
+        full_info = '%s %s' % (self.user.username, self.token)
+        return full_info.strip()
+
+    def __str__(self):
+        return self.full_info
+
+    def serialize(self):
+        return {
+            "username": self.user.username,
+            "email": self.user.email,
+            "token": self.token,
+            "date_created": self.date_created,
+            "date_expired": self.date_expired
+        }
+

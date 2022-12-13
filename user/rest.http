@@ -1,15 +1,15 @@
 GET http://127.0.0.1:8000/user/api/get_user_list
-
 ###
-
-GET http://127.0.0.1:8000/user/api/get_user_by_email
-
-###
-
 GET http://127.0.0.1:8000/user/api/get_user_by_email/ulusoyoguzhan@gmail.com HTTP/1.1
 content-type: application/json
-
 ###
-
 GET http://127.0.0.1:8000/user/api/get_user_by_pk/1 HTTP/1.1
 content-type: application/json
+###
+POST http://127.0.0.1:8000/user/api/authenticate HTTP/1.1
+content-type: application/json
+
+{
+    "username": "ogulusoy",
+    "password": 1
+}
