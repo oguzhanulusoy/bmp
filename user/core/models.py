@@ -43,7 +43,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
 
-'''
     def serialize(self):
         return {
             "username": self.username,
@@ -51,7 +50,5 @@ class User(AbstractBaseUser, PermissionsMixin):
             "first_name": self.first_name,
             "last_name": self.last_name,
             "phone_number": self.phone_number,
-            "date_joined": self.date_joined,
-            "web3_address": self.web3_address
+            "date_joined": self.date_joined
         }
-'''

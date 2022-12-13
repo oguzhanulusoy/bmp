@@ -1,3 +1,1 @@
-
-#asdasd
-GET https://example.com/comments?page=2&pageSize=10
+GET http://127.0.0.1:8000/user/api/get_user_list

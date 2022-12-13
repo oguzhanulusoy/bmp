@@ -1,0 +1,5 @@
+Getting all x objects: list
+Creating x object: create
+Getting x object by id: retrieve
+Updating x object by id: updating
+Deleting x object by id: destroy
